@@ -1,0 +1,11 @@
+<h1>add new message</h1>
+<form action="/message/add" method="post">
+    title: <input type="text" name="title">
+    body: <textarea name="body" cols="30" rows="10"></textarea>
+    <select name="topic">
+        {{#each topics}}
+        <option value="{{id}}">{{title}}</option>
+        {{/each}}
+    </select>
+    <button type="submit">send</button>
+</form>

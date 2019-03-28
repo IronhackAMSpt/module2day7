@@ -1,6 +1,13 @@
 <h1>all messages</h1>
+<div>
+    <ul>
+        <li><a href="/message/add">add new message</a></li>
+    </ul>
+</div>
 
 {{#each allmsg}}
 <h2>{{title}}</h2>
 <p>{{body}}</p>
+<i>{{topic.title}}</i>
+<a href="/message/edit?id={{_id}}">edit</a>
 {{/each}}

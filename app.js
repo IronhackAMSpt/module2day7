@@ -59,5 +59,7 @@ app.use('/', index);
 const message = require('./routes/message');
 app.use('/message', message);
 
+const topic = require('./routes/topic');
+app.use('/topic', topic);
 
 module.exports = app;

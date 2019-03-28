@@ -1,14 +1,15 @@
 const express = require('express');
 const router  = express.Router();
 const Message = require('../models/message');
+const Topic = require('../models/topic');
 
 /* GET home page */
 router.get('/', (req, res, next) => {
-  Message.find({})
+  Message.find()
+    .populate('topic')
     .then(messages => {
-      //console.log(JSON.stringify(messages));
+      console.log(messages);
       res.render('allmessages', {allmsg: messages})
-      //res.send(messages);
     })
     .catch(err => {
       if (err) console.log(err);
@@ -27,6 +28,48 @@ router.get('/single/:messageid', (req, res) => {
       if (err) console.log(err);
     })
 
+})
+
+router.get('/add', (req, res) => {
+  Topic.find()
+    .then(topics => {
+      res.render('add-message', {topics: topics});
+    })
+    .catch(err => {
+      console.log(err);
+    })
+})
+
+router.post('/add', (req, res) => {
+
+  Message.create(req.body)
+    .then(message => {
+      res.redirect('/message');
+    })
+    .catch(err => {
+      if (err) console.log(err);
+    })
+})
+
+router.get('/edit', (req, res) => {
+  Message.findOne({_id: req.query.id})
+    .then(message => {
+      res.render('edit-message', message);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+})
+
+router.post('/edit', (req, res) => {
+  console.log(req.query);
+  Message.update({_id: req.query.id}, req.body)
+    .then(message => {
+      res.redirect('/message');
+    })
+    .catch(err => {
+      console.log(err);
+    })
 })
 
 module.exports = router;
